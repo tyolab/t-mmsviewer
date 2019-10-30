@@ -25,7 +25,7 @@ public class App extends CommonApp<UI, Controller, AppSettings> implements Contr
 
     @Override
     public boolean hasUserLoggedIn() {
-        return false;
+        return true;
     }
 
     @Override

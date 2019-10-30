@@ -2,6 +2,7 @@ package au.com.tyo.mmsviewer.ui.page;
 
 import android.app.Activity;
 
+import au.com.tyo.app.ui.page.PageWebView;
 import au.com.tyo.mmsviewer.Controller;
 import au.com.tyo.app.ui.page.Page;
 import au.com.tyo.mmsviewer.R;
@@ -10,7 +11,7 @@ import au.com.tyo.mmsviewer.R;
  * Created by Eric Tang (eric.tang@tyo.com.au) on 27/11/17.
  */
 
-public class PageCommon extends Page<Controller> {
+public class PageCommon extends PageWebView<Controller> {
 
     protected Controller controller;
 
