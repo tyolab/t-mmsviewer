@@ -1,4 +1,4 @@
-package au.com.tyo.sample.ui.page;
+package au.com.tyo.mmsviewer.ui.page;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
-import au.com.tyo.sample.Controller;
-import au.com.tyo.sample.R;
+import au.com.tyo.mmsviewer.Controller;
+import au.com.tyo.mmsviewer.R;
 
 /**
  * Created by Eric Tang (eric.tang@tyo.com.au) on 11/9/17.

@@ -1,6 +1,6 @@
-package au.com.tyo.sample;
+package au.com.tyo.mmsviewer;
 
-import au.com.tyo.sample.ui.UI;
+import au.com.tyo.mmsviewer.ui.UI;
 
 /**
  * Created by Eric Tang (eric.tang@tyo.com.au) on 24/11/17.

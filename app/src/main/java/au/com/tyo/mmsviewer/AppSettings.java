@@ -1,4 +1,4 @@
-package au.com.tyo.sample;
+package au.com.tyo.mmsviewer;
 
 
 import android.content.Context;

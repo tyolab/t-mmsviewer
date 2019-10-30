@@ -1,10 +1,10 @@
-package au.com.tyo.sample.ui.page;
+package au.com.tyo.mmsviewer.ui.page;
 
 import android.app.Activity;
 
-import au.com.tyo.sample.Controller;
+import au.com.tyo.mmsviewer.Controller;
 import au.com.tyo.app.ui.page.Page;
-import au.com.tyo.sample.R;
+import au.com.tyo.mmsviewer.R;
 
 /**
  * Created by Eric Tang (eric.tang@tyo.com.au) on 27/11/17.

@@ -26,7 +26,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "au.com.tyo.sample"
+        applicationId "au.com.tyo.mmsviewer"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode "${buildNumber}".toInteger()
