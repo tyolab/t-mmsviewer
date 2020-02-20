@@ -5,7 +5,7 @@ apply plugin: 'com.android.application'
 def versionMajor = 0
 def versionMinor = 0
 def versionPatch = 1
-// alpha, beta, rc, rtm, ga, rtw, or empty
+// .alpha, .beta, .rc, .rtm, .ga, .rtw, or empty
 def versionRelease = ""
 def buildNumber = 1
 def buildType = "release"
@@ -17,7 +17,7 @@ def buildTime() {
     return df.format(new Date())
 }
 
-def versionFullName = "${versionMajor}.${versionMinor}.${versionPatch}.${versionRelease}"
+def versionFullName = "${versionMajor}.${versionMinor}.${versionPatch}${versionRelease}"
 def buildName = "build${buildTime()}"
 
 def ANDROIDX_LIBERY_VERSION = "1.1.0"
@@ -98,4 +98,10 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$ANDROIDX_LIBERY_VERSION"
     // For loading and tinting drawables on older versions of the platform
     implementation "androidx.appcompat:appcompat-resources:$ANDROIDX_LIBERY_VERSION"
+
+    // jsoup HTML parser library @ https://jsoup.org/
+    implementation 'org.jsoup:jsoup:1.12.2'
+    implementation 'me.relex:circleindicator:1.2.2@aar'
+
+    implementation "androidx.cardview:cardview:1.0.0"
 }

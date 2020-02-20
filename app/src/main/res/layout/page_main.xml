@@ -2,34 +2,84 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="2"
+    android:weightSum="10"
+    android:background="@drawable/background"
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:padding="20dp"
         >
 
-        <Button
-            android:id="@+id/btn_clear"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/buttons"
+            android:weightSum="2"
+            >
+            <Button
+                android:id="@+id/btn_clear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/card_bg_blue"
+                android:paddingRight="10dp"
+                android:textColor="@color/white"
+                />
+            <Button
+                android:id="@+id/btn_go"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/card_bg_blue"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/sms_input"
-            android:layout_above="@id/btn_clear"
+            android:layout_above="@id/buttons"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@drawable/card_bg_light"
+            android:hint="Paste the text here"
+            android:padding="8dp"
+            />
 
     </RelativeLayout>
 
-    <WebView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/webview"
-        android:layout_weight="1">
 
-    </WebView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:visibility="gone"
+        android:id="@+id/photos_container"
+        >
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingBottom="20dp"
+            android:paddingLeft="@dimen/card_padding"
+            android:paddingRight="@dimen/card_padding"/>
+
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"/>
+
+
+    </RelativeLayout>
+
+
 </LinearLayout>

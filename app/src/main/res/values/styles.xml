@@ -5,11 +5,39 @@
     <style name="AppThemeBase" parent="CommonAppTheme.Light">
 
         <!-- Customize your theme here. -->
+        <item name="actionBarPopupTheme">@style/AppStyle.Toolbar.Popup</item>
+        <item name="actionOverflowButtonStyle">@style/AppStyle.Menu.Light</item>
+    </style>
 
+    <style name="AppStyle.Menu.Light">
+        <item name="android:tint">@color/white</item>
+        <item name="android:textColor">@color/toolbarPopupMenuTextColor</item>
+    </style>
+
+    <style name="AppStyle.Toolbar.Light">
+        <item name="popupTheme">@style/AppStyle.Toolbar.PopupLight</item>
+        <item name="android:textColor">@color/toolbarPopupMenuTextColor</item>
+    </style>
+
+    <!-- ToolBar -->
+    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="titleTextColor">@color/toolbarPopupMenuTextColor</item>
+        <item name="popupTheme">@style/AppStyle.Toolbar.PopupLight</item>
+    </style>
+
+    <style name="AppStyle.Toolbar.PopupLight" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="actionMenuTextColor">@color/toolbarPopupMenuTextColor</item>
+        <item name="android:textColor">@color/toolbarPopupMenuTextColor</item>
+        <item name="android:textColorPrimary">@color/toolbarPopupMenuTextColor</item>
+        <item name="android:textColorSecondary">#38000000</item>
     </style>
 
     <style name="AppTheme" parent="AppThemeBase">
 
+    </style>
+
+    <style name="AppStyle.Toolbar.Popup" parent="@style/ThemeOverlay.AppCompat.Dark">
+        <item name="android:background">#043A44</item>
     </style>
 
 
