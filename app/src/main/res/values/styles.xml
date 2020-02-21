@@ -40,5 +40,8 @@
         <item name="android:background">#043A44</item>
     </style>
 
+    <style name="AppStyle.Splash.Icon">
+        <item name="android:src">@mipmap/ic_launcher</item>
+    </style>
 
 </resources>

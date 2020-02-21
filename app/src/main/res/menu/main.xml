@@ -5,4 +5,5 @@
         android:title="@string/load_last_album"
         app:showAsAction="never">
     </item>
+
 </menu>

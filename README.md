@@ -1,28 +1,11 @@
-# TYODROID BOILERPLATE
+# TyoMmsViewer
 
-A boilerplate android App that uses tyodroid framework for easy android App development.
+TyoMmsViewer is a MMS viewer for receiving media files sent to you, and unfortunately your telecom doesn't support MMS.
 
-# Things to do
+For example,
+If you are with Lycamobile and receive a MMS, you will see a standard text message with a link to Telstra's MMS site instead.
 
-## Clone the code
-```
-git clone git@github.com:e-tang/tyodroid-boilerplate.git
-cd tyodroid-boilerplate
-git submodule init
-git submodule update --remote --recursive
-cat .gitmodules | grep "path =" | cut -f 2 -d "=" | while read line; do cd $line; echo "In folder $line:";  git checkout master; echo; cd ..; done
-```
+The App is developed with TyoDroid framework (git@github.com:e-tang/tyodroid-boilerplate.git)
 
-Note:
-Please replace tyodroid-boilerplate with whatever name you prefer for your project.
 
-## Change the package name
-
-### Option 1
-* Rename with Android Studio's refactoring tool
-* Make sure the package name is changed int Manifest.xml
-* Make sure the package name is updated in build.gradle in the app folder
-* "Sync Now", otherwise, "File"->"Sync Project with Gradle files"
-* "Edit"->"Find"->"Replace in Path", "sample.R" >> "[xxx].R"
-
-### Option 2
+# Google Play Store Description

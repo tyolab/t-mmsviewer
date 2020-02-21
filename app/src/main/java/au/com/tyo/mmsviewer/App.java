@@ -1,3 +1,16 @@
+/**
+ * Copyright (c) 2020 TYO Lab (TYONLINE TECHNOLOGY PTY. LTD.). All rights reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package au.com.tyo.mmsviewer;
 
 import android.content.Context;
@@ -110,20 +123,21 @@ public class App extends CommonApp<UI, Controller, AppSettings> implements Contr
         credentialMap.setPassword(password);
         credentialMap.setUserId(userId);
         try {
-            InputStream is = httpJavaNet.post("https://mymessages.telstra.com/OTP/Otp", credentialMap.getCredentialsMap());
 
             String albumName = userId + "_" + password; // SimpleDateUtils.dateToYMDHM(Calendar.getInstance().getTime());
 
             File folder = null;
-            if (localStorage.exists(albumName)) {
-                folder = new File(localStorage.getCacheDir() + File.pathSeparator + albumName);
+            if (!forceDownload && localStorage.exists(albumName)) {
+                folder = new File(localStorage.getCacheDir() + File.separator + albumName);
                 WildcardFileStack stack = new WildcardFileStack(folder);
                 stack.listFiles();
 
-                if (stack.size() > 0 && !forceDownload) {
-                    return loadLastAlbum();
+                if (stack.size() > 0) {
+                    return loadAlbum(stack);
                 }
             }
+
+            InputStream is = httpJavaNet.post("https://mymessages.telstra.com/OTP/Otp", credentialMap.getCredentialsMap());
 
             String html = httpJavaNet.processInputStreamAsString(is);
             Document doc = Jsoup.parse(html);
@@ -175,16 +189,20 @@ public class App extends CommonApp<UI, Controller, AppSettings> implements Contr
 
         if (stack.size() > 0) {
             File firstFolder = stack.get(0);
-            loadAlbum(files, firstFolder);
+            files = loadAlbum(firstFolder);
         }
         return files;
     }
 
-    public List loadAlbum(List files, File firstFolder) {
+    public List loadAlbum(File firstFolder) {
         WildcardFileStack lastStack = new WildcardFileStack(firstFolder);
         lastStack.listFiles();
 
-        files = new ArrayList();
+        return loadAlbum(lastStack);
+    }
+
+    public List loadAlbum(WildcardFileStack lastStack) {
+        List files = new ArrayList();
         File file = lastStack.next();
         while (null != file) {
             if (ContentTypes.isImage(file.getName()))

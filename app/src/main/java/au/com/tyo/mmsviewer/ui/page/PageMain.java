@@ -1,3 +1,16 @@
+/**
+ * Copyright (c) 2020 TYO Lab (TYONLINE TECHNOLOGY PTY. LTD.). All rights reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package au.com.tyo.mmsviewer.ui.page;
 
 import android.Manifest;
@@ -42,6 +55,8 @@ public class PageMain extends PageCommon {
     private boolean canWrite;
 
     private ViewPager pager;
+
+    private CircleIndicator indicator;
 
     private View pagerContainer;
 
@@ -107,8 +122,6 @@ public class PageMain extends PageCommon {
             if (text.contains("mmsview")) {
                 editText.setText(text);
             }
-            else if (BuildConfig.DEBUG)
-                editText.setText("You have a new MMS Picture or Video Message. To view your message, go to http://telstra.com/mmsview & enter User ID:61469099825 and Password:1hh2g0 within 14 days");
         }
     }
 
@@ -118,27 +131,27 @@ public class PageMain extends PageCommon {
 
         editText = findViewById(R.id.sms_input);
         pager = (ViewPager) findViewById(R.id.pager);
-        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
-        indicator.setViewPager(pager);
+        indicator = (CircleIndicator) findViewById(R.id.indicator);
+        // indicator.setViewPager(pager);
 
         pagerContainer = findViewById(R.id.photos_container);
 
-        // editText.addTextChangedListener(new TextWatcher() {
-        //     @Override
-        //     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        //
-        //     }
-        //
-        //     @Override
-        //     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        //         downloadImages(s.toString(), false);
-        //     }
-        //
-        //     @Override
-        //     public void afterTextChanged(Editable s) {
-        //
-        //     }
-        // });
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startDownloadTask(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         Button btn = findViewById(R.id.btn_clear);
         btn.setText(R.string.clear);
@@ -154,15 +167,18 @@ public class PageMain extends PageCommon {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (canWrite)
-                    startBackgroundTask(OP_DOWNLOAD, editText.getText().toString(), true);
-                else {
-                    Toast.makeText(getActivity(), "Please allow the write access to the external storage", Toast.LENGTH_LONG);
-                    checkPermissions();
-                }
-
+                startDownloadTask(true);
             }
         });
+    }
+
+    private void startDownloadTask(boolean override) {
+        if (canWrite)
+            startBackgroundTask(OP_DOWNLOAD, editText.getText().toString(), override);
+        else {
+            Toast.makeText(getActivity(), "Please allow the write access to the external storage", Toast.LENGTH_LONG);
+            checkPermissions();
+        }
     }
 
     private void downloadImages(String mms, boolean b) {
@@ -210,6 +226,8 @@ public class PageMain extends PageCommon {
         pager.setAdapter(new ImagePagerAdapter(getActivity(), getSupportFragmentManager(), files));
         pager.setPageMargin((int) getResources().getDimension(R.dimen.card_padding) / 4);
         pager.setOffscreenPageLimit(3);
+
+        indicator.setViewPager(pager);
     }
 
     @Override
