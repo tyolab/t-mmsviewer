@@ -16,6 +16,6 @@
     </string>
     <string name="log_in">Log In</string>
     <string name="clear">Clear</string>
-    <string name="download">Force Download Again</string>
+    <string name="download">Download Again</string>
     <string name="load_last_album">Load Last Download</string>
 </resources>

@@ -25,16 +25,23 @@
                 android:id="@+id/btn_clear"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.95"
                 android:background="@drawable/card_bg_blue"
                 android:paddingRight="10dp"
                 android:textColor="@color/white"
                 />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="0.1"
+                ></View>
+
             <Button
                 android:id="@+id/btn_go"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.95"
                 android:background="@drawable/card_bg_blue"
                 android:paddingLeft="10dp"
                 android:textColor="@color/white"
@@ -57,29 +64,51 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
-        android:visibility="gone"
-        android:id="@+id/photos_container"
-        >
+        android:layout_weight="6">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/photos_container"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingBottom="20dp"
-            android:paddingLeft="@dimen/card_padding"
-            android:paddingRight="@dimen/card_padding"/>
+            android:layout_width="match_parent">
 
-        <me.relex.circleindicator.CircleIndicator
-            android:id="@+id/indicator"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"/>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingBottom="20dp"
+                android:paddingLeft="@dimen/card_padding"
+                android:paddingRight="@dimen/card_padding"/>
 
+            <me.relex.circleindicator.CircleIndicator
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"/>
+
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_bg_light"
+            android:id="@+id/text_box_container"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/message_box"
+                android:text="@string/welcome"
+                android:padding="12dp"
+                />
+        </FrameLayout>
 
     </RelativeLayout>
-
-
 </LinearLayout>

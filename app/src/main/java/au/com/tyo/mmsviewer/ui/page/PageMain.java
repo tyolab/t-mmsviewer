@@ -16,6 +16,7 @@ package au.com.tyo.mmsviewer.ui.page;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ClipboardManager;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -30,8 +32,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.util.List;
 
+import au.com.tyo.android.CommonCacheDirNotFoundException;
 import au.com.tyo.android.CommonPermission;
 import au.com.tyo.mmsviewer.BuildConfig;
+import au.com.tyo.mmsviewer.Constants;
 import au.com.tyo.mmsviewer.Controller;
 import au.com.tyo.mmsviewer.R;
 import au.com.tyo.mmsviewer.ui.ImagePagerAdapter;
@@ -60,6 +64,9 @@ public class PageMain extends PageCommon {
 
     private View pagerContainer;
 
+    private View textBoxContainer;
+    private TextView textViewMessageBox;
+
     /**
      * @param controller
      * @param activity
@@ -71,6 +78,7 @@ public class PageMain extends PageCommon {
 
         setRequiredPermissions(CommonPermission.PERMISSIONS_STORAGE);
         setStatusBarColor(activity.getResources().getColor(R.color.toolbarColor));
+        setMessageReceiverRequired(true);
         // setPageToolbarTitleColor(activity.getResources().getColor(R.color.toolbarColor));
     }
 
@@ -170,6 +178,9 @@ public class PageMain extends PageCommon {
                 startDownloadTask(true);
             }
         });
+
+        textBoxContainer = findViewById(R.id.text_box_container);
+        textViewMessageBox = textBoxContainer.findViewById(R.id.message_box);
     }
 
     private void startDownloadTask(boolean override) {
@@ -189,7 +200,9 @@ public class PageMain extends PageCommon {
         String[] credentials = controller.parseText(mms);
 
         if (null == credentials[0] || null == credentials[1]) {
-            Toast.makeText(getActivity(), "Unable to locate user id and password", Toast.LENGTH_LONG);
+            // Don't do toast here, it is a background thread
+            // UI is not allowed to be touched
+            getController().broadcastMessage(Constants.MESSAGE_BROADCAST_NO_CREDENTIALS_FOUND);
         }
         else {
             files = controller.downloadImages(credentials[0], credentials[1], b);
@@ -205,7 +218,8 @@ public class PageMain extends PageCommon {
             if (null != files && files.size() > 0) {
                 showAlbum(files);
             } else {
-                Toast.makeText(getActivity(), "Sorry, couldn't download the media file(s) for you", Toast.LENGTH_LONG);
+                showErrorMessage("Sorry, couldn't download the media file(s) for you"); //
+                // Toast.makeText(getActivity(), "Sorry, couldn't download the media file(s) for you", Toast.LENGTH_LONG);
             }
         }
         else if (id == OP_LOAD) {
@@ -214,13 +228,15 @@ public class PageMain extends PageCommon {
                 showAlbum(files);
             }
             else
-                Toast.makeText(getActivity(), "Sorry, no media files found", Toast.LENGTH_LONG);
+                showErrorMessage("Sorry, no media files found");
+                //Toast.makeText(getActivity(), "Sorry, no media files found", Toast.LENGTH_LONG);
         }
         else
             super.onPageBackgroundTaskFinished(id, o);
     }
 
     private void showAlbum(List files) {
+        textBoxContainer.setVisibility(View.GONE);
         pagerContainer.setVisibility(View.VISIBLE);
 
         pager.setAdapter(new ImagePagerAdapter(getActivity(), getSupportFragmentManager(), files));
@@ -243,12 +259,42 @@ public class PageMain extends PageCommon {
         return super.executeBackgroundTask(id, params);
     }
 
+    @Override
+    protected void handleBroadcastMessage(Message msg) {
+        if (msg.what == Constants.MESSAGE_BROADCAST_NO_CREDENTIALS_FOUND) {
+            // Toast.makeText(getActivity(), "Unable to locate user id and password", Toast.LENGTH_LONG);
+            showErrorMessage("Unable to locate user id and password");
+        }
+        super.handleBroadcastMessage(msg);
+    }
 
     @Override
     public void onRequestedPermissionsGranted(String permission) {
         super.onRequestedPermissionsGranted(permission);
 
-        if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+        if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            try {
+                controller.getLocalStorage().makeDirectory();
+            }
+            catch (CommonCacheDirNotFoundException ex) {
+                showErrorMessage("Write access to external storage is denied");
+                // Toast.makeText(getActivity(), "Write access to external storage is denied", Toast.LENGTH_LONG);
+            }
             canWrite = true;
+        }
+    }
+
+    private void showErrorMessage(String message) {
+        pagerContainer.setVisibility(View.GONE);
+        textBoxContainer.setVisibility(View.VISIBLE);
+
+        textViewMessageBox.setText(message);
+
+        textBoxContainer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                textBoxContainer.setVisibility(View.GONE);
+            }
+        }, 8000);
     }
 }

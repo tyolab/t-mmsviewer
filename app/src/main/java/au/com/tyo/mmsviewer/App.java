@@ -68,7 +68,7 @@ public class App extends CommonApp<UI, Controller, AppSettings> implements Contr
         credentialMap = new CredentialMap();
 
         localStorage = new CommonCache(context, "TyoMmsViewer", EXTERNAL_STORAGE);
-        localStorage.makeDirectory();
+        // localStorage.makeDirectory();
     }
 
     @Override
@@ -110,6 +110,11 @@ public class App extends CommonApp<UI, Controller, AppSettings> implements Contr
     @Override
     public void bindDataFromOtherApps(Intent intent) {
         // do nothing until we have such requirement
+    }
+
+    @Override
+    public CommonCache getLocalStorage() {
+        return localStorage;
     }
 
     @Override

@@ -4,10 +4,10 @@ apply plugin: 'com.android.application'
 
 def versionMajor = 0
 def versionMinor = 0
-def versionPatch = 1
+def versionPatch = 2
 // .alpha, .beta, .rc, .rtm, .ga, .rtw, or empty
 def versionRelease = ""
-def buildNumber = 1
+def buildNumber = 2
 def buildType = "release"
 
 def buildTime() {
