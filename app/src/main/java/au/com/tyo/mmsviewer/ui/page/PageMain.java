@@ -152,7 +152,9 @@ public class PageMain extends PageCommon {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                startDownloadTask(false);
+                // when the clear button is clicked, this will be triggered too
+                if (editText.getText().length() > 0)
+                    startDownloadTask(false);
             }
 
             @Override

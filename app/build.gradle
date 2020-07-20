@@ -39,6 +39,7 @@ android {
     }
     buildTypes {
         release {
+            buildType = "release"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
@@ -51,7 +52,7 @@ android {
             }
 
             /**
-             * The dev build config
+             * The release build config
              */
             buildConfigField "String", "BUILD_ID", "\"" + versionFullName + "-b" + buildNumber + "\""
             // buildConfigField "boolean", "DEBUG", "false"
@@ -59,7 +60,7 @@ android {
 
         debug {
             /**
-             * The  prod build config
+             * The debug build config
              */
             buildType = "debug"
 
